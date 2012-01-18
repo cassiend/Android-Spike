@@ -3,6 +3,7 @@ package com.spike;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.apache.http.HttpEntity;
@@ -26,23 +27,27 @@ import java.util.Map;
 
 public class NeatWebView extends Activity
 {
-    WebView webView;
+//    WebView webView;
     TokenCredentials tokenCredentials;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        webView = (WebView) this.findViewById(R.id.webview);
+//        setContentView(R.layout.main);
+        WebView webView = new WebView(this);
+//        webView = (WebView) this.findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NORMAL);
+        webView.getSettings().setSupportZoom(true);
+
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadDataWithBaseURL(url, url, "text/html", "UTF-8", null);
+                view.loadUrl(url);
                 return true;
             }
-
         });
+        setContentView(webView);
         login();
         Map<String,String> map = new HashMap<String, String>();
         map.put("Authorization", "OAuth " + tokenCredentials.current());
@@ -62,10 +67,10 @@ public class NeatWebView extends Activity
 
         try {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-//            nameValuePairs.add(new BasicNameValuePair("client_secret", "ecd1a4efede18c7323018a20bb95f4acf828b2febcd22b759a6bc2bf858d4a44"));
-//            nameValuePairs.add(new BasicNameValuePair("client_id", "4e9e5dd422b7a94bb7000108"));
-            nameValuePairs.add(new BasicNameValuePair("client_secret", "91f85595c7d364294aa596f4378ad99fa587d9c636e6ce3b53790f5fe72e3985"));
-            nameValuePairs.add(new BasicNameValuePair("client_id", "4e9e5dd422b7a94bb7000107"));
+            nameValuePairs.add(new BasicNameValuePair("client_secret", "ecd1a4efede18c7323018a20bb95f4acf828b2febcd22b759a6bc2bf858d4a44"));
+            nameValuePairs.add(new BasicNameValuePair("client_id", "4e9e5dd422b7a94bb7000108"));
+//            nameValuePairs.add(new BasicNameValuePair("client_secret", "91f85595c7d364294aa596f4378ad99fa587d9c636e6ce3b53790f5fe72e3985"));
+//            nameValuePairs.add(new BasicNameValuePair("client_id", "4e9e5dd422b7a94bb7000107"));
             nameValuePairs.add(new BasicNameValuePair("username", "sp.evan@mailinator.com"));
             nameValuePairs.add(new BasicNameValuePair("password", "p@ssw0rd"));
             nameValuePairs.add(new BasicNameValuePair("grant_type", "password"));
