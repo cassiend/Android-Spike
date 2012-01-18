@@ -27,7 +27,7 @@ import java.util.Map;
 public class NeatWebView extends Activity
 {
     WebView webView;
-    TokenAccessor tokenAccessor;
+    TokenCredentials tokenCredentials;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class NeatWebView extends Activity
         });
         login();
         Map<String,String> map = new HashMap<String, String>();
-        map.put("Authorization", "OAuth " + tokenAccessor.current());
+        map.put("Authorization", "OAuth " + tokenCredentials.current());
         map.put("X-Neat-Device", "android");
         map.put("X-Neat-Version","1.0 build 183");
         map.put("Accept", "text/html");
@@ -80,7 +80,7 @@ public class NeatWebView extends Activity
             loginResponse = EntityUtils.toString(entity);
             JSONObject jArray = new JSONObject(loginResponse);
             String token = jArray.getString("access_token");
-            tokenAccessor = new TokenAccessor(token);
+            tokenCredentials = new TokenCredentials(token);
             Log.d("Login", loginResponse);
 
 
