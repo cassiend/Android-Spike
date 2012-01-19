@@ -11,6 +11,7 @@ public final class R {
     public static final class attr {
     }
     public static final class id {
+        public static final int textview=0x7f040001;
         public static final int webview=0x7f040000;
     }
     public static final class layout {

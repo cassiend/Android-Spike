@@ -1,2 +1,3 @@
 *.output
-out/*
+*.apk
+*.class
